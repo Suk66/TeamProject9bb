@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>프로젝트</title>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+    <!-- Jquery-->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+        * {
+            font-family: "Merriweather", serif;
+        }
+
+        .mytitle {
+
+            height: 250px;
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-position: center;
+            background-size: cover;
+
+        }
+        .mytitle > button {
+            width: 150px;
+            height: 50px;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+
+            margin-top: 20px;
+        }
+
+        .mycards {
+            width: 1200px;
+
+            margin: 30px auto 0px auto;
+        }
+        .mypostingbox{
+            width: 500px;
+            margin: 30px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px blue;
+            border-radius: 5px;
+        }
+
+        .mybtn {
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mybtn > button {
+            margin-right: 5px;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+<div class="mytitle">
+    <h1>프로젝트 로그인</h1>
+    <button onclick="openclose()">로그인 페이지</button>
+</div>
+<div class="mypostingbox" id="postingbox">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="아이디를 입력하세요">
+        <label for="floatingInput">아이디</label>
+        <input type="password" class="form-control" id="floatingInput1" placeholder="비밀번호를 입력하세요">
+        <label for="floatingInput1">비밀번호 입력</label>
+    </div>
+    <div class="mybtn">
+        <button type="button" class="btn btn-outline-dark">로그인</button>
+        <button type="button" class="btn btn-outline-primary">회원가입</button>
+
+    </div>
+
+
+</div>
+
+<div class="mycards">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScXJTbVvo7LocHAckm2lbHfhqzYk3VVq_SA&s" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<h1>Hello world</h1>
+
+
+
+
+
+<!-- jQuery는 스크립트 태그 맨 아래에 배치 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJ+ygf5FVyKt1+KO0sW3BZLwWJR7ROCRr0Qbw=" crossorigin="anonymous"></script>
+
+<!-- Bootstrap JS (필요한 경우) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script>
+    function openclose() {
+        $('#postingbox').toggle();
+    }
+</script>
+
+
+</body>
+</html>
