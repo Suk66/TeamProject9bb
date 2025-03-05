@@ -1,124 +1,201 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJ+ygf5FVyKt1+KO0sW3BZLwWJR7ROCRr0Qbw=" crossorigin="anonymous"></script>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-  <title>Hello, world!</title>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
-    * {
-      font-family: "Merriweather", serif;
-    }
-
-    .mytitle {
-
-      height: 250px;
-      color: white;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-      background-position: center;
-      background-size: cover;
-
-    }
-    .mytitle > button {
-      width: 150px;
-      height: 50px;
-      background-color: transparent;
-      color: white;
-      border: 1px solid white;
-      border-radius: 5px;
-
-      margin-top: 20px;
-    }
-
-    .mycards {
-      width: 1200px;
-
-      margin: 30px auto 0px auto;
-    }
-    .mypostingbox{
-      width: 500px;
-      margin: 30px auto 0px auto;
-      padding: 20px;
-      box-shadow: 0px 0px 3px 0px blue;
-      border-radius: 5px;
-    }
-
-    .mybtn {
-
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .mybtn > button {
-      margin-right: 5px;
-    }
-
-  </style>
-
-  <script>
-    function openclose() {
-      $('#postingbox').toggle();
-    }
-  </script>
-
-</head>
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
-<body>
-<div class="mytitle">
-  <h1>프로젝트 로그인</h1>
-  <button onclick="openclose()">로그인 페이지</button>
-</div>
-<div class="mypostingbox">
-  <div id="postingbox">
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="floatingInput" placeholder="아이디를 입력하세요">
-    <label for="floatingInput">아이디</label>
-    <input type="password" class="form-control" id="floatingInput1" placeholder="비밀번호를 입력하세요">
-    <label for="floatingInput1">비밀번호 입력</label>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+      * {
+        font-family: "Merriweather", serif;
+      }
+
+      .mytitle {
+
+        height: 250px;
+        color: white;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+        background-position: center;
+        background-size: cover;
+
+      }
+      .mytitle > button {
+        width: 150px;
+        height: 50px;
+        background-color: transparent;
+        color: white;
+        border: 1px solid white;
+        border-radius: 5px;
+
+        margin-top: 20px;
+      }
+
+      .mycards {
+        width: 1200px;
+
+        margin: 30px auto 0px auto;
+      }
+      .mypostingbox{
+        height: 300px;
+        width: 500px;
+        margin: 50px auto 0px auto;
+        padding: 20px;
+        box-shadow: 0px 0px 3px 0px blue;
+        border-radius: 5px;
+      }
+
+      .mybtn {
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mybtn > button {
+        margin-right: 5px;
+      }
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+          let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+          fetch(url).then(res => res.json()).then(data => {
+            let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+            $('#seoulmise').text(mise)
+          })
+        })
+
+
+      function openclose() {
+        $('#postingbox').toggle();
+      }
+      function makeCard() {
+        <!-- let image = $('#image').val(); -->
+        let fileInput = document.getElementById('imageUpload');
+        let file = fileInput.files[0];
+
+        if (!file) {
+          alert("이미지를 선택하세요!");
+          return;
+        }
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          let imageSrc = e.target.result;
+          let title = $('#title').val();
+          let content = $('#content').val();
+
+          let temp_html = `
+          <div class="col h-100">
+            <div class="card">
+              <img src="${imageSrc}" class="card-img-top" alt="Uploaded Image">    <!-- 동적으로 이미지 적용 -->
+
+              <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${content}</p>
+              </div>
+            </div>
+          </div>`;
+          $('#cardgo').append(temp_html);
+
+          fileInput.value = "";
+          $('#title').val('');
+          $('#content').val('');
+        };
+        reader.readAsDataURL(file);
+      }
+
+    </script>
+
+  </head>
+
+
+  <body>
+  <div class="mytitle">
+    <h1>프로젝트 시뮬레이터</h1>
+    <p>현재 서울의 미세먼지 : <span id="seoulmise">나쁜놈</span></p>
+    <button onclick="openclose()">Your Sell!</button>
   </div>
-  <div class="mybtn">
-    <button type="button" class="btn btn-outline-dark">로그인</button>
-    <button type="button" class="btn btn-outline-primary">회원가입</button>
-  </div>
-  </div>
-
-
-</div>
-
-<div class="mycards">
-  <div class="row row-cols-1 row-cols-md-2 g-4">
-    <div class="col">
-      <div class="card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScXJTbVvo7LocHAckm2lbHfhqzYk3VVq_SA&s" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
+    <div class="mypostingbox" id="postingbox">
+      <div class="form-floating mb-3">
+        <label for="imageUpload" class="form-label"></label>
+        <input type="file" class="form-control" id="imageUpload" accept="image/*">
       </div>
+
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+      <label for="title">제목</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="content" placeholder="상품설명을 작성하세요">
+        <label for="content">상품설명</label>
+      </div>
+
+    <div class="mybtn">
+      <button type="button" class="btn btn-outline-dark">로그인</button>
+      <button onclick="makeCard()" type="button" class="btn btn-outline-primary">카드추가</button>
+    </div>
     </div>
 
   </div>
 
-</div>
+  <div class="mycards">
+    <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col h-100">
+        <div class="card">
+          <img th:src="@{/image/highball.jpg}" class="card-img-top" alt="My Image">
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <img th:src="@{/image/fish.jpg}" class="card-img-top" alt="My Image">
+
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <img th:src="@{/image/kach.jpg}" class="card-img-top" alt="My Image">
+
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
 
 
-</body>
-</html>
+  </body>
+  </html>
