@@ -23,5 +23,5 @@ create table product(
     product_id int auto_increment primary key,
     product_name varchar(100) not null,
     description text,
-    product_price decimal(10,2) not null,
+    product_price decimal(10,2) not null
 );
