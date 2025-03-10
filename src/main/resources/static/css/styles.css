@@ -1,8 +1,9 @@
-<style>
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
 * {
     font-family: "Merriweather", serif;
 }
+
+
 
 
 :root {
@@ -44,6 +45,7 @@
     margin: 0px auto 30px auto;
     box-shadow: 10px 10px 15px darkorange;
 }
+
 .mycards {
     width: 1200px;
 
@@ -57,6 +59,7 @@
     box-shadow: 0px 0px 3px 0px blue;
     border-radius: 5px;
 }
+
 .mybtn {
 
     display: flex;
@@ -64,9 +67,19 @@
     align-items: center;
     justify-content: center;
 }
+
 .mybtn > button {
     margin-right: 5px;
 }
+
+/*.mynavbar {*/
+
+/*  width: 1400px;*/
+/*  height: 50px;*/
+
+/*  margin: 10px 30px 10px 30px;*/
+
+/*}*/
 body {
     margin: 0;
     background-color: var(--bodybackground-color);
@@ -76,13 +89,26 @@ a{
     text-decoration: none;
     color: var(--text-color);
 }
+
+
+
 .navbar {
+
+
     display: flex;
     justify-content: space-between;
     background-color: var(--background-color);
     padding: 1px 1px 1px 25px;
     font-family: 'STIX Two Math';
 }
+/*
+.logo-btn {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+} */
+
+
 
 .navbar__logo i {
 
@@ -90,19 +116,27 @@ a{
     padding-left: 0;
     font-size: 45px;
 }
+
+
+
 .navbar__menu {
     display: none;
     flex-direction: column;
     width: 100%;
+
+
     list-style: none;
 
     margin: 0;
     padding-left: 0;
 }
+
 .navbar__menu.active {
     display: flex !important;
 
 }
+
+
 .navbar__menu li {
     padding: 5px 80px;
 }
@@ -110,6 +144,7 @@ a{
     background-color: var(--accent-color);
     border-radius: 3px;
 }
+
 .navbar__icons {
     list-style: none;
     display: flex;
@@ -122,6 +157,7 @@ a{
     padding: 8px 12px;
     margin: 0;
 }
+
 .navbar__toggleBtn {
     color: var(--accent-color);
     position: absolute;
@@ -146,33 +182,42 @@ a{
     font-size: 22px;
 }
 
+
+
 @media screen and (max-width: 700px) {
     .navbar {
         flex-direction: column;
         align-items: flex-start;
         position: relative;
     }
+
     .navbar__menu {
         display: none;
         flex-direction: column;
         align-items: center;
         width: 100%;
     }
+
     .navbar__menu li {
         width: 100%;
         text-align: center;
     }
+
     .navbar__icons {
         display: none;
         justify-content: center;
         width: 100%;
     }
+
     .navbar__toggleBtn {
         display: block;   /* 700px 이하에서 토글 버튼 나타남 */
     }
+
+
     .navbar__menu.active {}
     .navbar__icons.active {
         display: flex;
     }
+
+
 }
-</style>
