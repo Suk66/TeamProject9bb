@@ -1,0 +1,75 @@
+<!-- src/main/resources/templates/home.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/7d11643c82.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Home Page</title>
+</head>
+<body>
+<div th:replace="~{layouts/layout}">
+    <!-- 본문 콘텐츠 시작 -->
+    <div th:fragment="content">
+        <div class="mypostingbox" id="postingbox">
+            <div class="form-floating mb-3">
+                <label for="imageUpload" class="form-label"></label>
+                <input type="file" class="form-control" id="imageUpload" accept="image/*">
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+                <label for="title">제목</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="content" placeholder="상품설명을 작성하세요">
+                <label for="content">상품설명</label>
+            </div>
+
+            <div class="mybtn">
+                <button type="button" class="btn btn-outline-dark">로그인</button>
+                <button onclick="makeCard()" type="button" class="btn btn-outline-primary">카드추가</button>
+            </div>
+        </div>
+
+        <div class="mycards">
+            <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col h-100">
+                    <div class="card">
+                        <img th:src="@{/image/highball.jpg}" class="card-img-top" alt="My Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <img th:src="@{/image/fish.jpg}" class="card-img-top" alt="My Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <img th:src="@{/image/kach.jpg}" class="card-img-top" alt="My Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 본문 콘텐츠 끝 -->
+</div>
+</body>
+</html>

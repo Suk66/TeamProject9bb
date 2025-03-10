@@ -1,0 +1,178 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+* {
+    font-family: "Merriweather", serif;
+}
+
+
+:root {
+
+    --text-color: #f0f4f5;
+    --background-color: #263343;
+    --accent-color: orange;
+    --icons-color: rgb(152, 187,201);
+    --bodybackground-color: lightgray;
+}
+
+.mytitle {
+
+    height: 190px;
+    color: orange;
+
+    font-size: 20px;
+
+    padding: 50px 0px 10px 0px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background-position: center;
+    background-size: cover;
+
+}
+.mytitle > button {
+    width: 150px;
+    height: 50px;
+    background-color: transparent;
+    color: orange;
+    border: 4px solid deepskyblue;
+    border-radius: 5px;
+
+    margin: 0px auto 30px auto;
+    box-shadow: 10px 10px 15px darkorange;
+}
+.mycards {
+    width: 1200px;
+
+    margin: 30px auto 0px auto;
+}
+.mypostingbox{
+    height: 300px;
+    width: 500px;
+    margin: 50px auto 0px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 3px 0px blue;
+    border-radius: 5px;
+}
+.mybtn {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.mybtn > button {
+    margin-right: 5px;
+}
+body {
+    margin: 0;
+    background-color: var(--bodybackground-color);
+    font-family: 'STIX Two Math';
+}
+a{
+    text-decoration: none;
+    color: var(--text-color);
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--background-color);
+    padding: 1px 1px 1px 25px;
+    font-family: 'STIX Two Math';
+}
+
+.navbar__logo i {
+
+    color: var(--accent-color);
+    padding-left: 0;
+    font-size: 45px;
+}
+.navbar__menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+
+    margin: 0;
+    padding-left: 0;
+}
+.navbar__menu.active {
+    display: flex !important;
+
+}
+.navbar__menu li {
+    padding: 5px 80px;
+}
+.navbar__menu li:hover {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+.navbar__icons {
+    list-style: none;
+    display: flex;
+    color: var(--icons-color);
+    margin: 0;
+    padding-left: 0;
+}
+
+.navbar__icons li {
+    padding: 8px 12px;
+    margin: 0;
+}
+.navbar__toggleBtn {
+    color: var(--accent-color);
+    position: absolute;
+    right: 15px;
+    font-size: 20px;
+    display: none;
+}
+
+.chfont {
+    font-size: 40px;
+}
+#firstIcon {
+    cursor: pointer;
+}
+#secondIcon {
+    cursor: pointer;
+}
+.mise {
+    font-weight: bold;
+    margin-left: auto;
+    color: coral;
+    font-size: 22px;
+}
+
+@media screen and (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+    }
+    .navbar__menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .navbar__menu li {
+        width: 100%;
+        text-align: center;
+    }
+    .navbar__icons {
+        display: none;
+        justify-content: center;
+        width: 100%;
+    }
+    .navbar__toggleBtn {
+        display: block;   /* 700px 이하에서 토글 버튼 나타남 */
+    }
+    .navbar__menu.active {}
+    .navbar__icons.active {
+        display: flex;
+    }
+}
+</style>

@@ -1,10 +1,10 @@
 create table admin(
-                      admin_id int auto_increment primary key,
-                      admin_name varchar(50) not null,
-                      admin_pwd varchar(255) not null,
-                      admin_email varchar(100) unique not null,
-                      admin_phone varchar(20) unique not null,
-                      role ENUM('ADMIN') NOT NULL DEFAULT 'ADMIN'
+          admin_id int auto_increment primary key,
+          admin_name varchar(50) not null,
+          admin_pwd varchar(255) not null,
+          admin_email varchar(100) unique not null,
+          admin_phone varchar(20) unique not null,
+          role ENUM('ADMIN') NOT NULL DEFAULT 'ADMIN'
 );
 
 -- 회원 상세 정보

@@ -1,10 +1,376 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/7d11643c82.js" crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+        * {
+            font-family: "Merriweather", serif;
+        }
+
+
+
+
+        :root {
+
+            --text-color: #f0f4f5;
+            --background-color: #263343;
+            --accent-color: orange;
+            --icons-color: rgb(152, 187,201);
+            --bodybackground-color: lightgray;
+        }
+
+        .mytitle {
+
+            height: 190px;
+            color: orange;
+
+            font-size: 20px;
+
+            padding: 50px 0px 10px 0px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-position: center;
+            background-size: cover;
+
+        }
+        .mytitle > button {
+            width: 150px;
+            height: 50px;
+            background-color: transparent;
+            color: orange;
+            border: 4px solid deepskyblue;
+            border-radius: 5px;
+
+            margin: 0px auto 30px auto;
+            box-shadow: 10px 10px 15px darkorange;
+        }
+
+        .mycards {
+            width: 1200px;
+
+            margin: 30px auto 0px auto;
+        }
+        .mypostingbox{
+            height: 300px;
+            width: 500px;
+            margin: 50px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px blue;
+            border-radius: 5px;
+        }
+
+        .mybtn {
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mybtn > button {
+            margin-right: 5px;
+        }
+
+        /*.mynavbar {*/
+
+        /*  width: 1400px;*/
+        /*  height: 50px;*/
+
+        /*  margin: 10px 30px 10px 30px;*/
+
+        /*}*/
+        body {
+            margin: 0;
+            background-color: var(--bodybackground-color);
+            font-family: 'STIX Two Math';
+        }
+        a{
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+
+
+        .navbar {
+
+
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--background-color);
+            padding: 1px 1px 1px 25px;
+            font-family: 'STIX Two Math';
+        }
+        /*
+        .logo-btn {
+          cursor: pointer;
+          color: inherit;
+          text-decoration: none;
+        } */
+
+
+
+        .navbar__logo i {
+
+            color: var(--accent-color);
+            padding-left: 0;
+            font-size: 45px;
+        }
+
+
+
+        .navbar__menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+
+
+            list-style: none;
+
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .navbar__menu.active {
+            display: flex !important;
+
+        }
+
+
+        .navbar__menu li {
+            padding: 5px 80px;
+        }
+        .navbar__menu li:hover {
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .navbar__icons {
+            list-style: none;
+            display: flex;
+            color: var(--icons-color);
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .navbar__icons li {
+            padding: 8px 12px;
+            margin: 0;
+        }
+
+        .navbar__toggleBtn {
+            color: var(--accent-color);
+            position: absolute;
+            right: 15px;
+            font-size: 20px;
+            display: none;
+        }
+
+        .chfont {
+            font-size: 40px;
+        }
+        #firstIcon {
+            cursor: pointer;
+        }
+        #secondIcon {
+            cursor: pointer;
+        }
+        .mise {
+            font-weight: bold;
+            margin-left: auto;
+            color: coral;
+            font-size: 22px;
+        }
+
+
+
+        @media screen and (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .navbar__menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar__menu li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar__icons {
+                display: none;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .navbar__toggleBtn {
+                display: block;   /* 700px 이하에서 토글 버튼 나타남 */
+            }
+
+
+            .navbar__menu.active {}
+            .navbar__icons.active {
+                display: flex;
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+            fetch(url).then(res => res.json()).then(data => {
+                let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+                $('#seoulmise').text(mise)
+            })
+        })
+
+
+        function openclose() {
+            $('#postingbox').toggle();
+        }
+        function makeCard() {
+            <!-- let image = $('#image').val(); -->
+            let fileInput = document.getElementById('imageUpload');
+            let file = fileInput.files[0];
+
+            if (!file) {
+                alert("이미지를 선택하세요!");
+                return;
+            }
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let imageSrc = e.target.result;
+                let title = $('#title').val();
+                let content = $('#content').val();
+
+                let temp_html = `
+          <div class="col h-100">
+            <div class="card">
+              <img src="${imageSrc}" class="card-img-top" alt="Uploaded Image">    <!-- 동적으로 이미지 적용 -->
+
+              <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${content}</p>
+              </div>
+            </div>
+          </div>`;
+                $('#cardgo').append(temp_html);
+
+                fileInput.value = "";
+                $('#title').val('');
+                $('#content').val('');
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+
+
+
+    </script>
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+
+
+<!-- nav -->
+<!--  <div class="mynavbar" id="mynavbar">-->
+<!--  <nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--    <div class="container-fluid">-->
+<!--      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--      </button>-->
+<!--      <a class="navbar-brand" href="#">Navbar</a>-->
+<!--      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">-->
+<!--        <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="#">Link</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--        <form class="d-flex">-->
+<!--          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--          <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--  </div>-->
+
+
+
+
+<!-- header-->
+<div threplace="~{fragments/header}"></div>
+
+
+
+<!-- contents -->
+<div th:fragments="content"></div>
+
+
+
+
+
+<!-- footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<!-- nav bar Js -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoBtn = document.querySelector('.navbar__toggleIcon');
+        const navbarMenu = document.getElementById('menuOpen')
+
+        logoBtn.addEventListener('click', (event) => {
+            event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+            navbarMenu.classList.toggle('active');  // 메뉴 토글
+        });
+    });
+</script>
 </body>
 </html>
