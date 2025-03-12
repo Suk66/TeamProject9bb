@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:fragment="defaultLayout">
+
+    <head th:replace="fragments/config :: ConfigFragment">
+        <title>테스트 페이지</title>
+    </head>
+
+
+<body>
+
+    <!-- 공통 헤더 -->
+    <header th:replace="~{fragments/header :: HeaderFragment}"></header>
+
+    <!-- 공통 네비게이션 -->
+    <div th:replace="~{fragments/nav :: NavFragment}"></div>
+
+    <!-- 동적으로 삽입될 콘텐츠 영역 -->
+    <th:block layout:fragment="SeContent">
+
+
+    </th:block>
+
+    <!-- 공통 푸터 -->
+    <footer th:replace="~{fragments/footer :: FooterFragment}"></footer>
+
+
+<!-- Bootstrap JS Bundle with Popper -->
+
+<!-- 공통 스크립트 (예: 네비게이션 토글) -->
+<th:block layout:fragment="script">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const logoBtn = document.querySelector('.navbar__toggleIcon');
+            const navbarMenu = document.getElementById('menuOpen')
+
+            logoBtn.addEventListener('click', (event) => {
+                event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+                navbarMenu.classList.toggle('active');  // 메뉴 토글
+            });
+        });
+
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -9,7 +9,11 @@ public class ProductController {
     @GetMapping("/")
     public String index() {
 
-        return "/product/index";
+
+        return "suksuk/home";
+
+
+
     }
 
 }

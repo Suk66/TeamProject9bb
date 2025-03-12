@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<script th:fragment="ContentScripts">
+
+        window.onload = function () {
+            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM'];
+                    document.getElementById('seoulmise').textContent = mise;
+                });
+        };
+
+        function openclose() {
+            document.getElementById('postingbox').classList.toggle('d-none');
+        }
+
+        function makeCard() {
+            let fileInput = document.getElementById('imageUpload');
+            let file = fileInput.files[0];
+
+            if (!file) {
+                alert("이미지를 선택하세요!");
+                return;
+            }
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let imageSrc = e.target.result;
+                let title = document.getElementById('title').value;
+                let content = document.getElementById('content').value;
+
+                let temp_html = `
+          <div class="col h-100">
+            <div class="card">
+              <img src="${imageSrc}" class="card-img-top" alt="Uploaded Image">
+              <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${content}</p>
+              </div>
+            </div>
+          </div>`;
+                document.getElementById('cardgo').insertAdjacentHTML('beforeend', temp_html);
+
+                fileInput.value = "";
+                document.getElementById('title').value = '';
+                document.getElementById('content').value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
+
+

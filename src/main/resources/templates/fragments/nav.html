@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar" >
+
+        <div class="navbar__logo">
+            <i class="fa-brands fa-pied-piper-alt navbar__toggleIcon" id="firstIcon"></i>
+            <a class="chfont"> Choongang TeleCom <span><i class="fa-solid fa-right-to-bracket" id="secondIcon"></i></span></a>
+        </div>
+
+        <ul class="navbar__menu" id="menuOpen">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Product</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Bookings</a></li>
+        </ul>
+
+        <ul class="navbar__icons">
+            <li><i class="fa-brands fa-drupal"></i></li>
+            <li><i class="fa-solid fa-cat"></i></li>
+        </ul>
+
+        <a href="#" class="navbar__toggleBtn">
+            <i class="fa-brands fa-drupal"></i>
+        </a>
+    </nav>
+    <!-- nav end.-->
+
+
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+<head>
+  <meta charset="UTF-8">
+  <title>자식 페이지 - Home</title>
+  <!-- 페이지 전용 추가 CSS (필요 시) -->
+  <th:block layout:fragment="css">
+    <!-- 추가 스타일 작성 -->
+  </th:block>
+</head>
+<body>
+<!-- 자식 페이지의 콘텐츠를 부모의 SeContent 영역에 삽입 -->
+<th:block layout:fragment="SeContent">
+  <div class="mytitle">
+    <h1>국내 최저가 핸드폰 대 바겐 세일!</h1>
+    <p class="mise">현재 서울의 미세먼지: <span id="seoulmise">정보 없음</span></p>
+    <button onclick="openclose()">Your Sell!</button>
+  </div>
+
+  <!-- 게시글 작성 박스 -->
+  <div class="mypostingbox" id="postingbox">
+    <div class="form-floating mb-3">
+      <label for="imageUpload" class="form-label"></label>
+      <input type="file" class="form-control" id="imageUpload" accept="image/*">
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+      <label for="title">제목</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="content" placeholder="상품설명을 작성하세요">
+      <label for="content">상품설명</label>
+    </div>
+    <div class="mybtn">
+      <button type="button" class="btn btn-outline-dark">로그인</button>
+      <button onclick="makeCard()" type="button" class="btn btn-outline-primary">카드추가</button>
+    </div>
+  </div>
+
+  <!-- 카드 영역 -->
+  <div class="mycards">
+    <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col h-100">
+        <div class="card">
+          <img th:src="@{/image/highball.jpg}" class="card-img-top" alt="Highball">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img th:src="@{/image/fish.jpg}" class="card-img-top" alt="Fish">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img th:src="@{/image/kach.jpg}" class="card-img-top" alt="Kach">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a longer card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<!-- 페이지 전용 스크립트 -->
+<th:block layout:fragment="script" th:replace="~{fragments/scripts :: ContentScripts}"></th:block>
+</body>
+</html>

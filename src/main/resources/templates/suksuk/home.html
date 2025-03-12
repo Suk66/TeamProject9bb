@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>홈</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="mypostingbox" id="postingbox">
+        <div class="form-floating mb-3">
+            <label for="imageUpload" class="form-label"></label>
+            <input type="file" class="form-control" id="imageUpload" accept="image/*">
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+            <label for="title">제목</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="content" placeholder="상품설명을 작성하세요">
+            <label for="content">상품설명</label>
+        </div>
+
+        <div class="mybtn">
+            <button type="button" class="btn btn-outline-dark">로그인</button>
+            <button onclick="makeCard()" type="button" class="btn btn-outline-primary">카드추가</button>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+    <div class="mycards">
+        <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col h-100">
+                <div class="card">
+                    <img th:src="@{/image/highball.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{/image/fish.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{/image/kach.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const logoBtn = document.querySelector('.navbar__toggleIcon');
+            const navbarMenu = document.getElementById('menuOpen')
+
+            logoBtn.addEventListener('click', (event) => {
+                event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+                navbarMenu.classList.toggle('active');  // 메뉴 토글
+            });
+        });
+    </script>
+
+</main>
+
+</body>
+</html>

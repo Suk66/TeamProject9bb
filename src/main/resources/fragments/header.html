@@ -1,32 +1,16 @@
-<body>
-<div class="mytitle">
-    <h1>국내 최저가 핸드폰에 모든 것 대 바겐 세일 ! </h1>
-    <p class="mise">현재 서울의 미세먼지 : <span id="seoulmise">나쁜놈</span></p>
-    <button onclick="openclose()">Your Sell!</button>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="HeaderFragment">
+
+<div th:fragment="header">
+    <nav class="navbar">
+        <div class="navbar__logo">
+            <i class="fa-brands fa-pied-piper-alt navbar__toggleIcon" id="firstIcon"></i>
+            <a class="chfont" href="#">Choongang TeleCom
+                <span><i class="fa-solid fa-right-to-bracket" id="secondIcon"></i></span>
+            </a>
+        </div>
+    </nav>
 </div>
-
-<nav class="navbar">
-
-    <div class="navbar__logo">
-        <i class="fa-brands fa-pied-piper-alt navbar__toggleIcon" id="firstIcon"></i>
-        <a class="chfont"> Choongang TeleCom <span><i class="fa-solid fa-right-to-bracket" id="secondIcon"></i></span></a>
-    </div>
-
-    <ul class="navbar__menu" id="menuOpen">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Product</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Bookings</a></li>
-    </ul>
-
-    <ul class="navbar__icons">
-        <li><i class="fa-brands fa-drupal"></i></li>
-        <li><i class="fa-solid fa-cat"></i></li>
-    </ul>
-
-    <a href="#" class="navbar__toggleBtn">
-        <i class="fa-brands fa-drupal"></i>
-    </a>
-</nav>
-<!-- nav end.-->
+</html>

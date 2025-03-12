@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="NavFragment">
 
-</body>
+    <ul class="navbar__menu" id="menuOpen">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Product</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Bookings</a></li>
+    </ul>
+    <ul class="navbar__icons">
+        <li><i class="fa-brands fa-drupal"></i></li>
+        <li><i class="fa-solid fa-cat"></i></li>
+    </ul>
+    <a href="#" class="navbar__toggleBtn">
+        <i class="fa-brands fa-drupal"></i>
+    </a>
+
 </html>
