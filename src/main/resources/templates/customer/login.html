@@ -1,16 +1,9 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Google reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
   <title>로그인 화면</title>
 
   <style>
@@ -60,13 +53,10 @@
       margin-right: 5px;
     }
   </style>
-
+<th:block layout:fragment="scripts">
   <script>
     // reCAPTCHA 로드 완료 후 호출되는 함수
     function onRecaptchaLoad() {
-      console.log("🔄 reCAPTCHA 로드 완료! 사이트 키 가져오는 중...");
-
-      // 백엔드 API에서 sitekey 가져오기
       fetch("/api/recaptcha/site-key")
               .then(response => response.text())
               .then(siteKey => {
@@ -88,14 +78,15 @@
                   console.log("reCAPTCHA를 추가할 요소를 찾을 수 없습니다.");
                 }
               })
-
               .catch(error => console.error("⚠️ reCAPTCHA 키 로드 중 오류 발생:", error));
     }
   </script>
+</th:block>
 
 </head>
 
 <body>
+<main layout:fragment="content">
 <div class="mytitle">
   <h1>로그인</h1>
 </div>
@@ -127,7 +118,7 @@
 </div>
 
 <script>
-  document.getElementById("loginForm").addEventListener("submit", function (event) {
+  document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const email = document.getElementById("email").value.trim();
@@ -138,35 +129,35 @@
       alert("이메일과 비밀번호를 입력하세요!");
       return;
     }
-
     if (!recaptchaResponse) {
       alert("⚠️ reCAPTCHA를 완료하세요!");
       return;
     }
 
     const loginData = { email, pwd, recaptchaResponse };
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData)
+      });
 
-    fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData)
-    })
-            .then(response => response.json().then(data => ({ status: response.status, body: data })))
-            .then(result => {
-              console.log("🔍 서버 응답:", result);
-              if (result.status === 200) {
-                alert(result.body.message);
-                window.location.href = result.body.role === "ROLE_ADMIN" ? "/dashboard/admin" : "/dashboard/customer";
-              } else if (result.status === 400) {
-                alert(result.body.message);
-              }
-            })
-            .catch(error => {
-              console.error("⚠️ 로그인 요청 중 오류 발생:", error);
-              alert("로그인 중 오류가 발생했습니다.");
-            });
+      const result = await response.json();
+      console.log("🔍 서버 응답:", result);
+
+      if (response.status === 200) {
+        alert(result.message);
+        window.location.href = result.role === "ROLE_ADMIN" ? "/dashboard/admin" : "/dashboard/customer";
+      } else {
+        alert(result.message || "로그인에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("⚠️ 로그인 요청 중 오류 발생:", error);
+      alert("⚠️ 네트워크 오류가 발생했습니다.");
+    }
   });
 </script>
+</main>
 
 </body>
 </html>
