@@ -11,9 +11,12 @@ public class ProductController {
 
 
         return "suksuk/home";
-
-
-
     }
 
+    @GetMapping("/create")
+    public String create() {
+
+        return "create";
+
+    }
 }

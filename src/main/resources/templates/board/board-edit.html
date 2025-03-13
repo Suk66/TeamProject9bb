@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <title>게시판 수정 페이지</title>
+
+  <style>
+    * { font-family: "Merriweather", serif; }
+    .mytitle { height: 200px; color: white; display: flex; align-items: center; justify-content: center; background-color: #343a40; }
+    .mypostingbox { width: 60%; margin: 30px auto; padding: 20px; box-shadow: 0px 0px 5px 0px gray; border-radius: 5px; }
+  </style>
+</head>
+<body>
+<main layout:fragment="content">
+
+<div class="mytitle">
+  <h1>게시글 수정</h1>
+</div>
+
+<div class="mypostingbox">
+  <!-- ✅ 게시글 수정 폼 -->
+  <form th:action="@{/board/edit/{id}(id=${board.boardId})}" method="post">
+    <!-- 제목 입력 필드 -->
+    <div class="mb-3">
+      <label for="title" class="form-label"><strong>제목</strong></label>
+      <input type="text" id="title" name="title" class="form-control" th:value="${board.title}" required>
+    </div>
+
+    <!-- 내용 입력 필드 -->
+    <div class="mb-3">
+      <label for="content" class="form-label"><strong>내용</strong></label>
+      <textarea id="content" name="content" class="form-control" rows="5" required>[[${board.content}]]</textarea>
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="d-flex justify-content-between">
+      <!-- 뒤로가기 버튼 -->
+      <a th:href="@{/board/{id}(id=${board.boardId})}" class="btn btn-outline-dark">뒤로가기</a>
+
+      <!-- ✅ 로그인한 사용자 == 작성자 (바로 수정 가능) -->
+      <button th:if="${session.user != null and session.user.email == board.writer}"
+              type="submit"
+              class="btn btn-warning">
+        변경사항 저장
+      </button>
+
+      <!-- ✅ 비로그인 사용자 또는 작성자가 아닌 경우 (비밀번호 입력 필요) -->
+      <button th:unless="${session.user != null and session.user.email == board.writer}"
+              class="btn btn-warning"
+              onclick="showPasswordPrompt([[${board.boardId}]])">
+        변경사항 저장
+      </button>
+      <!-- 로그인한 사용자 == 작성자 (삭제 가능) -->
+      <button type="button" class="btn btn-danger"
+              th:if="${session.user != null and session.user.email == board.writer}"
+              th:onclick="|confirmDelete(${board.boardId}, event)|">
+        삭제
+      </button>
+
+      <!-- 비로그인 상태에서 비로그인 게시글 삭제 (비밀번호 입력 필요) -->
+      <button th:if="${session.user == null and #strings.contains(board.writer, '@') == false or (session.user != null and #strings.contains(board.writer, '@') == false)}"
+              type="button" class="btn btn-danger"
+              th:onclick="|confirmDeleteWithPassword(${board.boardId})|">
+        삭제 (비밀번호 입력)
+      </button>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+  </form>
+</div>
+
+<script>
+  function showPasswordPrompt(boardId) {
+    const password = prompt("게시글 작성 시 입력한 비밀번호를 입력하세요:");
+    if (password) {
+      window.location.href = `/board/edit/${boardId}?password=` + encodeURIComponent(password);
+    }
+  }
+
+
+
+  function confirmDelete(boardId, event) {
+    event.preventDefault();  // 페이지 리디렉션을 막는 부분
+
+    if (!confirm("정말 삭제하시겠습니까?")) {
+      console.log("✅ 삭제 취소됨");
+      return; // 취소 시 아무 동작도 하지 않음
+    }
+
+    fetch(`/board/delete/${boardId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert(data.message);
+                window.location.href = "/board";  // 삭제 후 목록으로 이동
+              } else {
+                alert("❌ 삭제 실패: " + data.message);
+              }
+            })
+            .catch(error => {
+              console.error("❌ [오류] 삭제 요청 실패:", error);
+              alert("삭제 실패! 다시 시도하세요.");
+            });
+  }
+
+  // 비로그인 게시글을 삭제하기 위한 비밀번호 입력 함수
+  function confirmDeleteWithPassword(boardId) {
+    const password = prompt("게시글 비밀번호를 입력하세요:");
+    if (!password) return;  // 비밀번호를 입력하지 않으면 취소
+
+    // 비밀번호를 서버로 전송하여 확인 후 삭제
+    fetch(`/board/check-password-before-delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ boardId: boardId, password: password })
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("비밀번호가 틀렸습니다.");
+              }
+              return response.json(); // JSON 응답을 파싱
+            })
+            .then(data => {
+              alert(data.message);  // 응답 메시지를 alert로 표시
+              if (data.success) {
+                window.location.href = "/board";  // 삭제 성공 후 목록으로 이동
+              }
+            })
+            .catch(error => {
+              alert(error.message);  // 오류 발생 시 메시지 출력
+            });
+  }
+</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>게시판 상세회원 페이지</title>
+
+    <style>
+        * { font-family: "Merriweather", serif; }
+        .mytitle { height: 200px; color: white; display: flex; align-items: center; justify-content: center; background-color: #343a40; }
+        .mypostingbox { width: 60%; margin: 30px auto; padding: 20px; box-shadow: 0px 0px 5px 0px gray; border-radius: 5px; }
+    </style>
+
+</head>
+
+<body>
+<main layout:fragment="content">
+
+<div class="mytitle">
+    <h1>게시글 상세</h1>
+</div>
+
+<div class="mypostingbox">
+    <h2 th:text="${board.title}"></h2>
+    <p><strong>작성자:</strong> <span th:text="${board.writer}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <hr>
+    <p th:text="${board.content}"></p>
+    <hr>
+    <a href="/board" class="btn btn-outline-dark">목록으로</a>
+
+    <!-- 📌 오류 수정: 로그인한 사용자 이메일 표시 -->
+    <p>📌 로그인한 사용자 이메일:
+        <span th:if="${session.user != null}" th:text="${session.user.email}"></span>
+        <span th:unless="${session.user != null}">비로그인 상태</span>
+    </p>
+
+    <p>📌 게시글 작성자 이메일: <span th:text="${board.writer}"></span></p>
+
+    <!-- 📌 로그인한 사용자 == 작성자 (수정 가능) -->
+    <a th:if="${session.user != null and session.user.email == board.writer}"
+       th:href="@{/board/edit/{id}(id=${board.boardId})}"
+       class="btn btn-warning">
+        수정
+    </a>
+
+    <!-- 📌 비로그인 상태에서 비로그인 작성 글만 수정 가능 (비밀번호 입력 필요) -->
+    <a th:if="${session.user == null and board.writer != null and board.writer.indexOf('@') == -1}"
+       th:href="@{/board/check-password/{id}(id=${board.boardId})}"
+       class="btn btn-warning">
+        수정 (비밀번호 입력)
+    </a>
+
+    <!-- 📌 로그인 상태에서 비로그인 작성 글만 수정 가능 (비밀번호 입력 필요) -->
+    <a th:if="${session.user != null and board.writer != null and board.writer.indexOf('@') == -1}"
+       th:href="@{/board/check-password/{id}(id=${board.boardId})}"
+       class="btn btn-warning">
+        수정 (비밀번호 입력)
+    </a>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<script>
+    function deleteBoard(boardId) {
+        console.log("📌 [디버깅] 삭제 요청 ID:", boardId);
+
+        if (confirm("정말 삭제하시겠습니까?")) {
+            fetch(`/board/delete/${boardId}`, { method: "POST" })
+                .then(response => {
+                    console.log("📌 [디버깅] 서버 응답 상태:", response.status);
+                    if (!response.ok) {
+                        throw new Error("삭제 요청 실패!");
+                    }
+                    return response.text();
+                })
+                .then(() => {
+                    alert("게시글이 삭제되었습니다.");
+                    window.location.href = "/board";
+                })
+                .catch(error => {
+                    console.error("❌ [오류] 삭제 요청 실패:", error);
+                    alert("삭제 실패! 다시 시도하세요.");
+                });
+        }
+    }
+</script>
+</main>
+</body>
+
+</html>

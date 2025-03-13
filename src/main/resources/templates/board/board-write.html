@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 작성</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+<div class="container mt-5">
+  <h2>게시글 작성</h2>
+
+  <!-- ✅ 게시글 작성 폼 -->
+  <form action="/board/write" method="post" onsubmit="return validateForm()">
+    <div class="mb-3">
+      <label class="form-label">제목</label>
+      <input type="text" class="form-control" name="title" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">작성자</label>
+
+      <!-- ✅ 비로그인 사용자는 직접 입력 -->
+      <input type="text" class="form-control"
+             th:if="${session.user == null}" name="writer" required>
+
+      <!-- ✅ 로그인 사용자는 자동 입력 (readonly) -->
+      <input type="text" class="form-control"
+             th:if="${session.user != null}"
+             th:value="${session.user.name}" name="displayWriter" readonly>
+
+      <!-- ✅ 이메일을 hidden 필드로 추가해서 서버로 전송 -->
+      <input type="hidden" name="writer"
+             th:if="${session.user != null}"
+             th:value="${session.user.email}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">내용</label>
+      <textarea class="form-control" name="content" rows="5" required></textarea>
+    </div>
+
+    <!-- ✅ 비밀번호 입력 (비로그인 사용자만 보이게 설정) -->
+    <div id="passwordField" class="form-floating mb-3">
+      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+      <label for="password">비밀번호</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">작성 완료</button>
+    <a href="/board" class="btn btn-secondary">취소</a>
+
+    <p>📌 세션 사용자 정보: <span th:text="${session.user}"></span></p>
+
+
+  </form>
+</div>
+
+<!-- ✅ 로그인 여부 확인 -->
+<input type="hidden" id="isLoggedIn" th:value="${session.user != null}">
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const isLoggedIn = document.getElementById("isLoggedIn").value === "true";
+    if (isLoggedIn) {
+      document.getElementById("passwordField").style.display = "none";  // 로그인한 사용자는 비밀번호 입력 X
+    }
+  });
+
+  function validateForm() {
+    const isLoggedIn = document.getElementById("isLoggedIn").value === "true";
+    const password = document.getElementById("password").value;
+
+    if (!isLoggedIn && !password) {
+      alert("비밀번호를 입력해주세요!");
+      return false;
+    }
+    return true;
+  }
+</script>
+
+</main>
+</body>
+</html>

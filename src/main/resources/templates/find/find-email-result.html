@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>이메일 찾기</title>
+</head>
+<body>
+<main layout:fragment="content">
+<div class="mytitle">
+    <h1>이메일 찾기</h1>
+</div>
+
+<div class="mypostingbox" id="postingbox">
+
+    <div th:if="${email}" class="alert alert-info">
+        <p>귀하의 이메일: <strong th:text="${email}"></strong></p>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div class="mybtn">
+        <a href="/login" class="btn btn-outline-dark">로그인</a>
+        <a href="/static" class="btn btn-outline-dark">홈으로</a>
+    </div>
+
+
+    <div class="mycards">
+        <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col h-100">
+
+            </div>
+
+            <div class="col">
+
+            </div>
+
+            <div class="col">
+
+            </div>
+        </div>
+        </form>
+    </div>
+    <div>
+    </div>
+</div>
+</main>
+</body>
+</html>

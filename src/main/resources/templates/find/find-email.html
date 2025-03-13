@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>이메일 찾기</title>
+</head>
+<body>
+<main layout:fragment="content">
+<div class="mytitle">
+    <h1>이메일 찾기</h1>
+</div>
+<div class="mypostingbox" id="postingbox">
+    <form id="findEmailForm" action="/find-email" method="POST">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="제목을 입력하세요">
+            <label for="phone">휴대폰 번호</label>
+        </div>
+        <div class="mybtn">
+            <button type="submit" class="btn btn-outline-dark" style="margin-right: 30px">이메일 찾기</button>
+        </div>
+        <div class="mycards">
+            <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col h-100">
+
+                </div>
+
+                <div class="col">
+
+                </div>
+
+                <div class="col">
+
+                </div>
+
+            </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const phone = document.getElementById("phone").value.trim();
+
+        if (!phone) {
+            alert("휴대폰 번호를 입력하세요!");
+            return;
+        }
+
+        // ✅ 올바른 JSON 요청 전송
+        fetch("/find-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // JSON 데이터임을 명확히 지정
+            },
+            body: JSON.stringify({ phone: phone }) // JSON 데이터 변환 후 전송
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/find-email-result"; // 결과 페이지로 이동
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("이메일 찾기 오류:", error);
+                alert("오류 발생! 다시 시도하세요.");
+            });
+    });
+
+</script>
+</main>
+</body>
+</html>

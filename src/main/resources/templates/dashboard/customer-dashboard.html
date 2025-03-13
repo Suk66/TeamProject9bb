@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>일반회원 대시보드</title>
+</head>
+<body>
+<main layout:fragment="content">
+<h1>일반회원 대시보드</h1>
+<p>안녕하세요, <span th:text="${username}">회원</span>님!</p>
+<a href="/logout">로그아웃</a>
+<a href="/account/update" class="btn btn-outline-dark">회원정보 수정</a>
+</main>
+</body>
+</html>
