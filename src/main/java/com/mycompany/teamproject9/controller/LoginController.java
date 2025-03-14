@@ -5,6 +5,7 @@ import com.mycompany.teamproject9.dto.User;
 import com.mycompany.teamproject9.service.RecaptchaService;
 import com.mycompany.teamproject9.repository.AdminMapper;
 import com.mycompany.teamproject9.repository.CustomerMapper;
+import com.mycompany.teamproject9.service.UserService;
 import com.mycompany.teamproject9.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,31 +30,48 @@ public class LoginController {
     @Autowired
     private CustomerMapper customerMapper;
 
+    private UserService userService;
+
+    private User getSessionUser(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            String email = (String) session.getAttribute("userEmail"); // 이메일 가져오기
+            if (email != null) {
+                user = userService.findByEmail(email);
+                session.setAttribute("user", user); // ✅ 세션에 다시 저장
+            }
+        }
+        return user;
+    }
+
+
     @GetMapping
     public String showLoginPage() {
-        return "customer/login"; // login.html (로그인 페이지의 이름)
+        return "login"; // login.html (로그인 페이지의 이름)
     }
 
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Map<String, Object> model) {
-        String user = (String) session.getAttribute("user");
+        User user = getSessionUser(session);
+
+        if (user == null) {
+            return "redirect:/login"; // 세션이 없다면 로그인 페이지로 리다이렉트
+        }
         String role = (String) session.getAttribute("role");
 
-        if (user == null || role == null) {
-            return "redirect:customer/login"; // 세션이 없다면 로그인 페이지로 리다이렉트
-        }
-
         // 세션에서 username을 모델로 전달하여 Thymeleaf에서 사용할 수 있도록 합니다.
-        model.put("username", user);
+        model.put("username", user.getName());
 
         if ("ROLE_ADMIN".equals(role)) {
-            return "admin_dashboard"; // 관리자 대시보드
+            return "dashboard/admin-dashboard"; // 관리자 대시보드
         } else if ("ROLE_CUSTOMER".equals(role)) {
-            return "customer_dashboard"; // 일반회원 대시보드
+            return "dashboard/customer-dashboard"; // 일반회원 대시보드
         }
 
-        return "redirect:customer/login"; // 유효하지 않은 role이 있다면 로그인 페이지로 리다이렉트
+        return "redirect:/login"; // 유효하지 않은 role이 있다면 로그인 페이지로 리다이렉트
     }
+
     @PostMapping
     @ResponseBody
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request, HttpServletRequest httpRequest) {
@@ -62,49 +80,42 @@ public class LoginController {
 
         String email = request.getEmail();
         String password = request.getPwd();
-        String storedPassword = null;
+        String storedPassword;
         User user = null;
 
         // ✅ 관리자 로그인 검증
         storedPassword = adminMapper.findPasswordByEmail(email);
         if (storedPassword != null && PasswordUtil.checkPassword(password, storedPassword)) {
             user = adminMapper.findUserByEmail(email);
-
-            // 🔥 디버깅: User 객체 확인
-            System.out.println("📌 [디버깅] findUserByEmail() 결과: " + user);
-            if (user != null) {
-                System.out.println("📌 [디버깅] 사용자 이름: " + user.getName());
-            }
-
             session.setAttribute("user", user);
             session.setAttribute("role", "ROLE_ADMIN");
+            session.setMaxInactiveInterval(30 * 60); // ✅ 30분 세션 유지
 
             response.put("message", "로그인 성공 (관리자)");
             response.put("role", "ROLE_ADMIN");
-            return ResponseEntity.ok(response);
         }
 
         // ✅ 일반회원 로그인 검증
-        storedPassword = customerMapper.findPasswordByEmail(email);
-        if (storedPassword != null && PasswordUtil.checkPassword(password, storedPassword)) {
-            user = customerMapper.findUserByEmail(email);
+        if (user == null) {
+            storedPassword = customerMapper.findPasswordByEmail(email);
+            if (storedPassword != null && PasswordUtil.checkPassword(password, storedPassword)) {
+                user = customerMapper.findUserByEmail(email);
+                session.setAttribute("user", user);
+                session.setAttribute("role", "ROLE_CUSTOMER");
+                session.setMaxInactiveInterval(30 * 60); // ✅ 30분 세션 유지
 
-            // 🔥 디버깅: User 객체 확인
-            System.out.println("📌 [디버깅] findUserByEmail() 결과: " + user);
-            if (user != null) {
-                System.out.println("📌 [디버깅] 사용자 이름: " + user.getName());
+                response.put("message", "로그인 성공 (일반회원)");
+                response.put("role", "ROLE_CUSTOMER");
             }
-
-            session.setAttribute("user", user);
-            session.setAttribute("role", "ROLE_CUSTOMER");
-
-            response.put("message", "로그인 성공 (일반회원)");
-            response.put("role", "ROLE_CUSTOMER");
-            return ResponseEntity.ok(response);
         }
 
-        // 로그인 실패
-        response.put("message", "이메일 또는 비밀번호가 일치하지 않습니다.");
-        return ResponseEntity.status(400).body(response);
+        // ✅ 최종 응답
+        if (user != null) {
+            System.out.println("📌 [디버깅] 로그인 성공 - 사용자: " + user.getName());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "이메일 또는 비밀번호가 일치하지 않습니다.");
+            return ResponseEntity.status(400).body(response);
+        }
     }
 }

@@ -6,57 +6,17 @@
 <head>
   <title>로그인 화면</title>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
-    * {
-      font-family: "Merriweather", serif;
-    }
-
-    .mytitle {
-      height: 250px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-      background-position: center;
-      background-size: cover;
-    }
-
-    .mytitle > button {
-      width: 150px;
-      height: 50px;
-      background-color: transparent;
-      color: white;
-      border: 1px solid white;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-
-    .mypostingbox {
-      height: 300px;
-      width: 500px;
-      margin: 50px auto 0px auto;
-      padding: 20px;
-      box-shadow: 0px 0px 3px 0px blue;
-      border-radius: 5px;
-    }
-
-    .mybtn {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
-    .mybtn > button {
-      margin-right: 5px;
-    }
-  </style>
 <th:block layout:fragment="scripts">
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+
   <script>
     // reCAPTCHA 로드 완료 후 호출되는 함수
     function onRecaptchaLoad() {
+      if (typeof grecaptcha === "undefined") {
+        console.error("recaptcha 로드 실패");
+        setTimeout(onRecaptchaLoad, 3000);  // 3초후 다시 로드
+        return
+      }
       fetch("/api/recaptcha/site-key")
               .then(response => response.text())
               .then(siteKey => {

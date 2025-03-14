@@ -2,9 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="fragments/config :: Config"></head>
+<head>
+    <th:insert th:replace="fragments/config :: Config"></th:insert>
 
+    <th:block layout:fragment="styles"></th:block>
 
+</head>
 
 <body>
 <!-- 헤더 -->

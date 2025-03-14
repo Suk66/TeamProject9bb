@@ -2,7 +2,6 @@ package com.mycompany.teamproject9.config;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +10,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "recaptcha")
 public class RecaptchaConfig {
-    @Value("${recaptcha.site-key}")
+
     private String siteKey;
-    @Value("${recaptcha.secret-key}")
     private String secretKey;
+
+    public RecaptchaConfig() {
+        this.siteKey = System.getenv("recaptcha_site_key");
+        this.secretKey = System.getenv("recaptcha_secret_key");
+    }
 }

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>로그인 화면</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+    * {
+      font-family: "Merriweather", serif;
+    }
+
+    .mytitle {
+      height: 250px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+      background-position: center;
+      background-size: cover;
+    }
+
+    .mytitle > button {
+      width: 150px;
+      height: 50px;
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .mypostingbox {
+      height: 300px;
+      width: 500px;
+      margin: 50px auto 0px auto;
+      padding: 20px;
+      box-shadow: 0px 0px 3px 0px blue;
+      border-radius: 5px;
+    }
+
+    .mybtn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+    .mybtn > button {
+      margin-right: 5px;
+    }
+  </style>
+
+  <script>
+    // reCAPTCHA 로드 완료 후 호출되는 함수
+    function onRecaptchaLoad() {
+      console.log("🔄 reCAPTCHA 로드 완료! 사이트 키 가져오는 중...");
+
+      // 백엔드 API에서 sitekey 가져오기
+      fetch("/api/recaptcha/site-key")
+              .then(response => response.text())
+              .then(siteKey => {
+                if (!siteKey) {
+                  console.error("❌ reCAPTCHA sitekey를 가져오지 못했습니다!");
+                  return;
+                }
+                console.log("✅ reCAPTCHA sitekey:", siteKey);
+
+                // reCAPTCHA 렌더링 (가져온 sitekey 사용)
+                grecaptcha.render('recaptcha', {
+                  'sitekey': siteKey,
+                  'theme': 'light'
+                });
+              })
+              .catch(error => console.error("⚠️ reCAPTCHA 키 로드 중 오류 발생:", error));
+    }
+  </script>
+
+</head>
+
+<body>
+<div class="mytitle">
+  <h1>로그인</h1>
+</div>
+
+<div class="mypostingbox" id="postingbox">
+  <form id="loginForm">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요">
+      <label for="email">이메일</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="pwd" placeholder="비밀번호를 입력하세요">
+      <label for="pwd">비밀번호</label>
+    </div>
+
+    <!-- reCAPTCHA 표시 -->
+    <div class="g-recaptcha" id="recaptcha"></div>
+
+    <div class="mybtn">
+      <button type="submit" class="btn btn-outline-dark" style="margin-right: 30px">로그인</button>
+      <a href="/create" class="btn btn-outline-dark">회원가입</a>
+    </div>
+
+    <div class="text-center mt-3">
+      <button type="button" class="btn btn-link" onclick="location.href='/find-password'">비밀번호 찾기</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const pwd = document.getElementById("pwd").value.trim();
+    const recaptchaResponse = grecaptcha.getResponse(); // reCAPTCHA 응답 가져오기
+
+    if (!email || !pwd) {
+      alert("이메일과 비밀번호를 입력하세요!");
+      return;
+    }
+
+    if (!recaptchaResponse) {
+      alert("⚠️ reCAPTCHA를 완료하세요!");
+      return;
+    }
+
+    const loginData = { email, pwd, recaptchaResponse };
+
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginData)
+    })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(result => {
+              console.log("🔍 서버 응답:", result);
+              if (result.status === 200) {
+                alert(result.body.message);
+                window.location.href = result.body.role === "ROLE_ADMIN" ? "/dashboard/admin" : "/dashboard/customer";
+              } else if (result.status === 400) {
+                alert(result.body.message);
+              }
+            })
+            .catch(error => {
+              console.error("⚠️ 로그인 요청 중 오류 발생:", error);
+              alert("로그인 중 오류가 발생했습니다.");
+            });
+  });
+</script>
+
+</body>
+</html>

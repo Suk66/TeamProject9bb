@@ -1,0 +1,22 @@
+.customerPage {
+    height: 170px;
+
+    margin: 20px auto 20px auto;
+
+    background-color: navajowhite;
+
+    padding: 10px 10px 10px 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.out1 {
+    margin-bottom: 8px;
+    color: orangered;
+}
+title{
+    font-size: 20px;
+}

@@ -3,15 +3,34 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-  <meta charset="UTF-8">
   <title>일반회원 대시보드</title>
+  <th:block layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/customer_dash.css}">
+  </th:block>
 </head>
 <body>
 <main layout:fragment="content">
+  <div class="customerPage">
 <h1>일반회원 대시보드</h1>
 <p>안녕하세요, <span th:text="${username}">회원</span>님!</p>
-<a href="/logout">로그아웃</a>
-<a href="/account/update" class="btn btn-outline-dark">회원정보 수정</a>
+<a href="/logout" class="out1">로그아웃</a>
+    <form id="updateForm" action="/account/update" method="post" style="display: inline;">
+      <button type="submit" class="btn btn-outline-dark">회원정보 수정</a></button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const logoBtn = document.querySelector('.navbar__toggleIcon');
+      const navbarMenu = document.getElementById('menuOpen')
+
+      logoBtn.addEventListener('click', (event) => {
+        event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+        navbarMenu.classList.toggle('active');  // 메뉴 토글
+      });
+    });
+  </script>
+
 </main>
 </body>
 </html>
