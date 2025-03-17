@@ -10,7 +10,7 @@ public class ProductController {
     public String index() {
 
 
-        return "suksuk/home";
+        return "customer/login";
     }
 
     @GetMapping("/create")

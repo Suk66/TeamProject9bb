@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>일반회원 대시보드</title>
+    <th:block layout:fragment="styles">
+        <link rel="stylesheet" th:href="@{/css/customer_dash.css}">
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="mycards">
+        <div id="cardgo" class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col h-100">
+                <div class="card">
+                    <img th:src="@{/image/highball.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{/image/fish.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{/image/kach.jpg}" class="card-img-top" alt="My Image">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoBtn = document.querySelector('.navbar__toggleIcon');
+        const navbarMenu = document.getElementById('menuOpen')
+
+        logoBtn.addEventListener('click', (event) => {
+            event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+            navbarMenu.classList.toggle('active');  // 메뉴 토글
+        });
+    });
+</script>
+</main>
+</body>
+</html>

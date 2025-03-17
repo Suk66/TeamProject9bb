@@ -13,13 +13,10 @@ public class WebConfig {
     @Bean
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
-
         // UTF-8 인코딩 설정
         restTemplate.getMessageConverters().add(
                 0, new StringHttpMessageConverter(StandardCharsets.UTF_8)
         );
-
         return restTemplate;
     }
-
 }

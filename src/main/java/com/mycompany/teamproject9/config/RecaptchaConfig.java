@@ -18,4 +18,6 @@ public class RecaptchaConfig {
         this.siteKey = System.getenv("recaptcha_site_key");
         this.secretKey = System.getenv("recaptcha_secret_key");
     }
+
+
 }

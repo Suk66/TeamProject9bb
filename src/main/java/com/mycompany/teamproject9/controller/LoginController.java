@@ -66,7 +66,7 @@ public class LoginController {
         if ("ROLE_ADMIN".equals(role)) {
             return "dashboard/admin-dashboard"; // 관리자 대시보드
         } else if ("ROLE_CUSTOMER".equals(role)) {
-            return "dashboard/customer-dashboard"; // 일반회원 대시보드
+            return "dashboard/customer_main"; // 일반회원 대시보드
         }
 
         return "redirect:/login"; // 유효하지 않은 role이 있다면 로그인 페이지로 리다이렉트

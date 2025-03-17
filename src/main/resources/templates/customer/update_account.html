@@ -52,6 +52,18 @@
 </div>
 
     <script>
+            document.addEventListener('DOMContentLoaded', function () {
+            const logoBtn = document.querySelector('.navbar__toggleIcon');
+            const navbarMenu = document.getElementById('menuOpen')
+            logoBtn.addEventListener('click', (event) => {
+            event.preventDefault();   // 로고 클릭시 기본 이벤트 방지;
+            navbarMenu.classList.toggle('active');  // 메뉴 토글
+        });
+        });
+
+
+
+
         document.addEventListener("DOMContentLoaded", function () {
             // ✅ 회원 정보 불러오기
             fetch("/account/get-user-info")
